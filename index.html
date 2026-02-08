@@ -594,28 +594,32 @@
       </div>
     </div>
     <script>
-      function generateQR() {
-        const authURL = new URL("QRCAuthentication.html", window.location.href);
-        authURL.searchParams.set("appId", window.__appId || "0");
-        const verifyURL = authURL.toString();
+     function generateQR() {
+  const qrBox = document.getElementById("qr-box");
+  qrBox.innerHTML = "";
 
-        // 3. QR Code ko naye data ke saath banana
-        const qrContainer = document.getElementById("qr-box");
-        qrContainer.innerHTML = ""; // Purana QR hatane ke liye
+  const publicVerifyUrl =
+    "https://kajalsharma987.github.io/IncomeCertification/verify.html";
+  const url = new URL(publicVerifyUrl);
 
-        new QRCode(qrContainer, {
-          text: verifyURL,
-          width: 100,
-          height: 100,
-          colorDark: "#000000",
-          colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.H, // Higher level for overlay safety
-        });
-        const cross = document.createElement("div");
-        cross.className = "qr-cross";
-        cross.setAttribute("aria-hidden", "true");
-        qrContainer.appendChild(cross);
-      }
+  url.searchParams.set("read", "1");
+  url.searchParams.set(
+    "certNo",
+    document.getElementById("certNo").innerText.trim(),
+  );
+
+  new QRCode(qrBox, {
+    text: url.toString(),
+    width: 95,
+    height: 95,
+  });
+
+  const cross = document.createElement("div");
+  cross.className = "qr-cross";
+  cross.setAttribute("aria-hidden", "true");
+  qrBox.appendChild(cross);
+}
+
 
       function syncFieldsFrom(el) {
         const key = el.getAttribute("data-field");
@@ -744,3 +748,4 @@
     </script>
   </body>
 </html>
+
