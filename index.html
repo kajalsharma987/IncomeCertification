@@ -613,16 +613,12 @@
 
         new QRCode(qrContainer, {
           text: verifyURL,
-          width: 100,
-          height: 100,
+          width: 160,
+          height: 160,
           colorDark: "#000000",
           colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.H, // Higher level for overlay safety
+          correctLevel: QRCode.CorrectLevel.M, // Lower level for long URLs
         });
-        const cross = document.createElement("div");
-        cross.className = "qr-cross";
-        cross.setAttribute("aria-hidden", "true");
-        qrContainer.appendChild(cross);
       }
 
       function syncFieldsFrom(el) {
@@ -766,4 +762,3 @@
     </script>
   </body>
 </html>
-
