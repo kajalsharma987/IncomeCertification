@@ -1,168 +1,153 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Official Certificate - Fixed</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Caste Certificate - Government of Assam</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     <style>
-      body {
-        background: #777;
-        margin: 0;
-        padding: 20px;
-        font-family: "Times New Roman", Times, serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+      :root {
+        --app-bg: #f1f1f6;
+        --accent: #8b6bd8;
       }
-      .no-print {
-        background: #fff;
-        padding: 10px;
-        margin-bottom: 20px;
-        width: 210mm;
+      * {
+        box-sizing: border-box;
+        -webkit-print-color-adjust: exact;
+      }
+      body {
+        background: var(--app-bg);
+        margin: 0;
+        padding: 0;
+        font-family: "Times New Roman", Times, serif;
+      }
+      .viewer-body {
         display: flex;
         justify-content: center;
-        border-radius: 4px;
+        padding: 40px 0;
       }
+
       #certificate {
         width: 210mm;
         height: 297mm;
-        max-height: 297mm;
         background: white;
-        padding: 10mm 12mm;
-        box-sizing: border-box;
+        padding: 12mm 15mm;
         position: relative;
         color: #000;
-        border: 2px solid #000;
-        overflow: hidden;
-      }
-      .header-wrap {
+        border: 1px solid #000;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         display: flex;
-        border-bottom: 1px solid #000;
-        padding-bottom: 4px;
-        margin-bottom: 8px;
+        flex-direction: column;
       }
+
+      .header-wrap {
+        display: grid;
+        grid-template-columns: 80px 1fr 80px;
+        align-items: center;
+        border-bottom: 2px solid #000;
+        padding-bottom: 8px;
+        margin-bottom: 12px;
+      }
+
       .header-content {
-        flex-grow: 1;
         text-align: center;
-        padding-right: 45px;
       }
       .header-content p {
-        margin: 0;
-        font-size: 14px;
+        margin: 1px 0;
         font-weight: bold;
+        font-size: 14px;
       }
       .header-content h2 {
-        margin: 1px 0;
-        font-size: 19px;
-        letter-spacing: 0.3px;
+        margin: 3px 0;
+        font-size: 20px;
       }
 
       .meta-container {
         display: flex;
         justify-content: space-between;
-        margin-top: 15px;
-        font-size: 13.5px;
+        margin-bottom: 15px;
+        font-size: 13px;
       }
-      /* Barcode fix for PDF */
-      .barcode-box {
-        margin-top: 5px;
-        width: 160px;
+      #barcodeSvg {
+        width: 150px;
+        height: 45px;
       }
-      .barcode-svg {
-        width: 160px;
-        height: 35px;
-        border: 0.5px solid #000;
-      }
-      .barcode-img {
-        width: 120px; /* barcode ki width */
-        height: 30px; /* barcode ki height */
-        display: block;
+      .barcode-text {
+        text-align: center;
+        font-size: 12px;
         margin-top: 2px;
-      }
-
-      .barcode-number {
-        display: block;
-        width: 160px; /* SAME as barcode */
-        text-align: left;
-        letter-spacing: 1.5px;
-        /* text: bold; */
-        font-size: 12.5px;
-        /* letter-spacing: 2px; */
-        margin-top: 2px;
-      }
-
-      .app-side {
-        text-align: right;
-        line-height: 1.3;
-        font-size: 13.5px;
-      }
-      .app-side div {
-        margin-bottom: 5px;
+        letter-spacing: 0.5px;
       }
 
       .title-block {
         text-align: center;
-        margin: 25px 0;
+        margin: 10px 0;
       }
       .title-block h1 {
-        font-size: 16px;
+        font-size: 22px;
         text-decoration: underline;
-        font-weight: bold;
+        margin: 2px 0;
       }
 
       .middle-section {
-        font-size: 14.5px;
-        line-height: 1.9;
-        margin-top: 5px;
+        font-size: 14px;
+        line-height: 1.5;
+        flex-grow: 1;
       }
-      .row {
-        display: flex;
+      .assamese-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr 1fr;
+        column-gap: 5px;
+        row-gap: 8px;
         align-items: baseline;
-        margin-bottom: 6px;
+        margin-bottom: 10px;
       }
-      .editable {
-        outline: none;
+      .assamese-grid .value {
         font-weight: bold;
         text-transform: uppercase;
-        cursor: text;
-        padding: 0 3px;
+        border-bottom: none;
+      }
+      .assamese-line {
+        margin: 12px 0;
+        font-weight: bold;
       }
       .eng-para {
-        margin-top: 25px;
+        margin: 8px 0;
+        font-size: 13.5px;
+        line-height: 1.6;
         text-align: justify;
-        line-height: 1.7;
-        font-size: 14px;
       }
 
-      /* Pure footer area ko manage karne ke liye */
+      .footer-block {
+        width: 100%;
+        margin-top: 8px;
+        padding-bottom: 5mm;
+      }
       .footer-wrap {
         display: flex;
-        justify-content: space-between; /* QR ko left aur Signature ko right bhejne ke liye */
-        align-items: flex-end; /* Dono ko bottom se align rakhega */
-        font-family: Arial, sans-serif;
-        padding: 20px;
-        width: 100%;
-      }
-      .footer-block {
-        position: static;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 8px;
       }
 
+      .qr-photo-group {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+      }
+      .photo-box {
+        margin-left: 80px;
+      }
       #qr-box {
-        width: 100px; /* QR code ka size yahan adjust karein */
-        height: 100px;
-        background-color: #eee; /* Sirf placeholder ke liye */
+        width: 95px;
+        height: 95px;
         position: relative;
-        overflow: hidden;
       }
       .qr-cross {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        inset: 0;
         pointer-events: none;
       }
       .qr-cross::before,
@@ -185,568 +170,503 @@
         left: 50%;
         margin-left: -1.5px;
       }
+      .photo-box {
+        width: 85px;
+        height: 105px;
+        border: 1px solid #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff;
+        font-size: 12px;
+      }
 
       .sig-section {
-        text-align: left; /* Text khud left-aligned rahega lekin box right mein hoga */
+        text-align: right;
+        font-size: 11px;
+        font-weight: normal;
+        padding-bottom: 4px;
       }
-
       .sig-auth-title {
         font-size: 11px;
+        font-weight: bold;
         display: block;
-        margin-bottom: 6px;
+        margin-bottom: 4px;
       }
-
       .sig-container {
         display: flex;
         align-items: flex-start;
+        justify-content: flex-end;
+        gap: 8px;
       }
-
       .sig-valid-text {
         font-size: 10.5px;
-        /* font-weight: bold; */
         display: block;
+        margin-bottom: 2px;
       }
-
       .sig-details {
-        font-size: 7px;
-        line-height: 1.15;
+        font-size: 8px;
+        line-height: 1.2;
       }
-
       .green-tick {
-        height: 42px;
-        margin-left: -5px; /* Tick ko details ke sath overlap karne ke liye */
-        margin-top: 3px;
+        width: 60px;
+        height: auto;
       }
 
       .notes-area {
-        margin-top: 30px;
-        /* Line removed as requested */
-        padding-top: 2px;
+        font-size: 10px;
+        line-height: 1.3;
+        border-top: none;
+        padding-top: 0;
       }
+
       .csc-footer {
-        position: absolute;
-        bottom: 12mm;
-        width: 80%;
+        margin-top: 8px;
         display: flex;
         justify-content: space-between;
         font-size: 12px;
-        font-style: italic;
+      }
+
+      .editable {
+        cursor: text;
+        border-bottom: none;
+      }
+      .fab {
+        position: fixed;
+        right: 30px;
+        bottom: 30px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 24px;
+      }
+      .download-bar {
+        display: flex;
+        justify-content: center;
+        margin: 16px 0;
+      }
+      .download-btn {
+        background: #000;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .read-only .download-bar,
+      .read-only .fab {
+        display: none !important;
       }
 
       @media print {
-        .no-print {
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        .fab {
           display: none;
         }
-        body {
-          background: #fff;
-          padding: 0;
+        #certificate {
+          border: none;
+          box-shadow: none;
         }
-      }
-      @page {
-        size: A4;
-        margin: 0;
       }
     </style>
   </head>
   <body>
-    <div class="no-print">
-      <button
-        onclick="savePDF()"
-        style="
-          padding: 10px 20px;
-          background: #000;
-          color: #fff;
-          border: none;
-          cursor: pointer;
-          font-weight: bold;
-        "
-      >
-        DOWNLOAD FINAL PDF
-      </button>
+    <div class="download-bar">
+      <button class="download-btn" onclick="savePDF()">DOWNLOAD PDF</button>
     </div>
-
-    <div id="certificate">
-      <div class="header-wrap">
-        <div style="width: 70px">
+    <div class="viewer-body">
+      <div id="certificate">
+        <div class="header-wrap">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Emblem_of_India.svg/800px-Emblem_of_India.svg.png"
-            style="width: 60px"
-            crossorigin="anonymous"
+            style="width: 65px"
           />
-        </div>
-        <div class="header-content">
-          <p>অসম চৰকাৰ</p>
-          <h2>GOVERNMENT OF ASSAM</h2>
-          <p>চক্ৰ বিষয়া কাৰ্যালয়</p>
-          <p>
-            OFFICE OF THE CIRCLE OFFICER<br />
-            <span class="editable" contenteditable="true">TINSUKIA</span>
-          </p>
-          <!-- <br /> -->
-          <p>
-            <span class="editable" data-field="district" contenteditable="true"
-              >TINSUKIA DISTRICT</span
-            >
-          </p>
-          <!-- <br/> -->
-          <p>(Assam e-District Project)</p>
-        </div>
-      </div>
-
-      <div class="meta-container">
-        <div class="barcode-side">
-          প্ৰমাণ পত্ৰ নং <br />
-          Certificate No. :
-          <span class="editable" id="certNo" contenteditable="true"
-            >12122025-001-15682285</span
-          ><br /><br />
-
-          <div class="barcode-box">
-            <svg id="barcodeSvg" class="barcode-svg"></svg>
+          <div class="header-content">
+            <p>অসম চৰকাৰ</p>
+            <h2>GOVERNMENT OF ASSAM</h2>
+            <p>OFFICE OF THE DISTRICT COMMISSIONER</p>
+            <h3>
+              <span class="editable" contenteditable="true"
+                >TINSUKIA DISTRICT</span
+              >
+            </h3>
           </div>
-
-          <span
-            class="editable barcode-number"
-            id="certNoBarcode"
-            contenteditable="true"
-          >
-            1212202500115682285
-          </span>
+          <div style="width: 65px; text-align: right">
+            <img
+              src="logo.png"
+              alt="Logo"
+              style="width: 60px; height: 60px; object-fit: contain"
+            />
+          </div>
         </div>
-        <div class="app-side">
-          <div>আবেদন নং</div>
+
+        <div class="meta-container">
           <div>
-            Application No. :
-            <span class="editable" id="appNo" contenteditable="true">
-              SSDG/ED/INC/109435568
-            </span>
+            Certificate No:
+            <span class="editable" id="certNo" contenteditable="true"
+              >21102025-001-14852754</span
+            ><br />
+            <svg id="barcodeSvg"></svg>
+            <div id="barcodeText" class="barcode-text"></div>
           </div>
-          <div>
-            তাৰিখ / Date:
-            <span class="editable" id="issueDate" contenteditable="true"
-              >12-12-2025</span
+          <div style="text-align: right">
+            Application No:
+            <span class="editable" data-field="appNo" contenteditable="true"
+              >SSDG/ED/CASTE/108855237</span
+            ><br />
+            Date:
+            <span class="editable" data-field="date" contenteditable="true"
+              >21-10-2025</span
             >
           </div>
-        </div>
-      </div>
-
-      <div class="title-block">
-        <p style="font-size: 12.5px; margin: 0">বার্ষিক আয়ৰ প্ৰমাণ পত্ৰ</p>
-        <h1>ANNUAL INCOME CERTIFICATE</h1>
-      </div>
-
-      <div class="middle-section">
-        <div class="row">
-          <span>ইয়াৰ দ্বাৰা প্ৰমাণ পত্ৰ দিয়া হ'ল যে</span>
-          <div style="flex-grow: 1; text-align: center">
-            <span
-              class="editable"
-              id="personName"
-              data-field="name"
-              contenteditable="true"
-              >PAVAN KUMAR</span
-            >
-          </div>
-          <span>ব পুত্ৰ / কন্যা / পত্নী / স্বামী</span>
-        </div>
-        <div class="row">
-          <div style="width: 320px; text-align: center">
-            <span
-              class="editable"
-              id="fatherName"
-              data-field="father"
-              contenteditable="true"
-              >SUKHVIR SINGH</span
-            >
-          </div>
-          <span>গাঁও/ নগৰ:</span>
-          <div style="flex-grow: 1; text-align: center">
-            <span
-              class="editable"
-              id="village"
-              data-field="village"
-              contenteditable="true"
-              >NOWSALIA GAON</span
-            >
-          </div>
-        </div>
-        <div class="row" style="justify-content: space-between">
-          <div>
-            মৌজা :
-            <span
-              class="editable"
-              id="mouza"
-              data-field="mouza"
-              contenteditable="true"
-              >RONGAGORA</span
-            >
-          </div>
-          <div>
-            চক্ৰ :
-            <span
-              class="editable"
-              id="circle"
-              data-field="circle"
-              contenteditable="true"
-              >TINSUKIA</span
-            >
-          </div>
-          <div>
-            জিলা :
-            <span
-              class="editable"
-              id="district"
-              data-field="district"
-              contenteditable="true"
-              >JORHAT</span
-            >
-          </div>
-        </div>
-        <div class="row">
-          <span>মুঠ বার্ষিক আয়</span>
-          <div style="flex-grow: 1; text-align: center">
-            <span
-              class="editable"
-              id="incomeSource"
-              data-field="income"
-              contenteditable="true"
-              >CULTIVATION</span
-            >
-          </div>
-          <span
-            >ৰ পৰা Rs.
-            <span
-              class="editable"
-              id="amount"
-              data-field="amount"
-              contenteditable="true"
-              >3,00,000</span
-            ></span
-          >
-        </div>
-        <div class="row">
-          <span
-            >(Rupees
-            <span
-              class="editable"
-              id="amountWords"
-              data-field="words"
-              contenteditable="true"
-              >Three Lakh</span
-            >
-            ) only</span
-          >
-          <div style="flex-grow: 1; text-align: right">টকা হয়।</div>
         </div>
 
-        <div class="eng-para">
-          This is to certify that
-          <b
-            ><span class="editable" data-field="name" contenteditable="true"
-              >PAVAN KUMAR</span
-            ></b
-          >
-          son/ daughter/ wife/ husband of
-          <b
-            ><span class="editable" data-field="father" contenteditable="true"
-              >SUKHVIR SINGH</span
-            ></b
-          >
-          Village / Town
-          <b
-            ><span class="editable" data-field="village" contenteditable="true"
-              >NOWSALIA GAON</span
-            ></b
-          >
-          Mouza
-          <b
-            ><span class="editable" data-field="mouza" contenteditable="true"
-              >RONGAGORA</span
-            ></b
-          >
-          Circle
-          <b
-            ><span class="editable" data-field="circle" contenteditable="true"
-              >TINSUKIA</span
-            ></b
-          >
-          District
-          <b
-            ><span class="editable" data-field="district" contenteditable="true"
-              >JORHAT</span
-            ></b
-          >
-          whose total annual income from
-          <b
-            ><span class="editable" data-field="income" contenteditable="true"
-              >CULTIVATION</span
-            ></b
-          >
-          is Rs.
-          <b
-            ><span class="editable" data-field="amount" contenteditable="true"
-              >3,00,000</span
-            ></b
-          >
-          (Rupees
-          <b
-            ><span class="editable" data-field="words" contenteditable="true"
-              >Three Lakh</span
-            ></b
-          >) only.
+        <div class="title-block">
+          <p>জাতিৰ প্ৰমাণ পত্র</p>
+          <h1>CASTE CERTIFICATE</h1>
         </div>
-        <div style="margin-top: 18px; font-size: 12.5px; line-height: 1.5">
-          এই প্ৰমাণ পত্ৰ সংশ্লিষ্ট এল এমৰ প্ৰতিবেদন ভিত্তিত প্ৰদান কৰা হ'ল /
-          This certificate is issued on the basis of concerned L.M's report.
 
-          <br /><br />
+        <div class="middle-section">
+          <div class="assamese-grid">
+            <div>ইয়াৰ দ্বাৰা প্ৰমাণিত কৰা হ’ল যে</div>
+            <div style="text-align: center">
+              <span class="editable value" contenteditable="true"
+                >SUMIT KUMAR</span
+              >
+            </div>
+            <div style="text-align: right">
+              ব পুত্ৰ / কন্যা / পত্নী / স্বামী
+            </div>
 
-          This certificate is valid for one year from the date of issue
-        </div>
-      </div>
-      <div class="footer-block">
-        <div class="footer-wrap">
-          <div id="qr-box">
-            <!-- <img src="qr_code_image.png" alt="QR Code" style="width: 100%" /> -->
+            <div>
+              পিতা:
+              <span class="editable value" contenteditable="true"
+                >KUSHAL PAL SINGH</span
+              >
+            </div>
+            <div style="text-align: center">
+              গাঁও / নগৰ :
+              <span class="editable value" contenteditable="true"
+                >NALANIHULA GAON</span
+              >
+            </div>
+            <div style="text-align: right">
+              (পোঃ তঃ)
+              <span class="editable value" contenteditable="true"
+                >RANGAGORA S.O</span
+              >
+            </div>
+
+            <div>
+              আকৰ্ষি চকী :
+              <span class="editable value" contenteditable="true"
+                >TINSUKIA</span
+              >
+            </div>
+            <div style="text-align: center">
+              জিলা :
+              <span class="editable value" contenteditable="true"
+                >TINSUKIA</span
+              >
+            </div>
+            <div></div>
+
+            <div>অসম ৰাজ্যৰ,</div>
+            <div style="text-align: center">
+              <span class="editable value" contenteditable="true">GOWALA</span>
+            </div>
+            <div style="text-align: right">জাতি / সম্প্রদায়ৰ লোক হয়,</div>
           </div>
 
-          <div class="sig-section">
-            <span class="sig-auth-title">Signature of Approving Authority</span>
+          <div class="assamese-line">
+            ই অসমৰ চৰকাৰৰ দ্বারা পিছপৰা জাতি/অন্যান্য অতি পিছপৰা জাতি হিচাপে
+            স্বীকৃত।
+          </div>
 
-            <div class="sig-container">
-              <div class="text-side">
-                <span class="sig-valid-text">Signature valid</span>
-                <div class="sig-details">
-                  Digitally Signed.<br />
-                  Name:
-                  <span class="editable" contenteditable="true"
-                    >KRITIKA SARMAH</span
-                  ><br />
-                  Date:
-                  <span class="editable" contenteditable="true"
-                    >12-Dec-2025 12:41:45</span
-                  ><br />
-                  Reason: eDistrict<br />
-                  Location: Assam
+          <div class="eng-para">
+            This is to certify that
+            <b
+              ><span class="editable" contenteditable="true"
+                >SUMIT KUMAR</span
+              ></b
+            >
+            Son/Daughter of
+            <b
+              ><span class="editable" contenteditable="true"
+                >KUSHAL PAL SINGH</span
+              ></b
+            >
+            Vill/Town
+            <b
+              ><span class="editable" contenteditable="true"
+                >NALANIHULA GAON</span
+              ></b
+            >
+            P.O
+            <b
+              ><span class="editable" contenteditable="true">RANGAGORA</span></b
+            >
+            P.S
+            <b><span class="editable" contenteditable="true">TINSUKIA</span></b>
+            District -
+            <b><span class="editable" contenteditable="true">TINSUKIA</span></b>
+            in the State of Assam belongs to the
+            <b><span class="editable" contenteditable="true">GOWALA</span></b>
+            caste/community which is recognised as Other Backward Class/More
+            Other Backward Class by Govt. of Assam.
+          </div>
+
+          <div class="eng-para">
+            1. Shri/Srimati/*Kumari *:
+            <b
+              ><span class="editable" contenteditable="true"
+                >SUMIT KUMAR</span
+              ></b
+            >
+            and his/her family ordinarily reside(s) in Village/Town* :
+            <b
+              ><span class="editable" contenteditable="true"
+                >NALANIHULA GAON</span
+              ></b
+            >
+            of
+            <b><span class="editable" contenteditable="true">TINSUKIA</span></b>
+            District/Subdivision* in the state of <b>ASSAM</b>.
+          </div>
+
+          <br />
+          <br />
+          <div class="footer-block">
+            <div class="footer-wrap">
+              <div class="qr-photo-group">
+                <div id="qr-box"></div>
+                <div
+                  class="photo-box"
+                  onclick="document.getElementById('photoInput').click()"
+                >
+                  <img
+                    id="photoImg"
+                    style="
+                      display: none;
+                      width: 100%;
+                      height: 100%;
+                      object-fit: cover;
+                    "
+                  />
+                  <span id="photoText">PHOTO</span>
+                </div>
+                <input
+                  type="file"
+                  id="photoInput"
+                  style="display: none"
+                  accept="image/*"
+                />
+              </div>
+              <div class="sig-section">
+                <span class="sig-auth-title"
+                  >Signature of Approving Authority</span
+                >
+
+                <div class="sig-container">
+                  <div class="text-side">
+                    <span class="sig-valid-text editable" contenteditable="true"
+                      >Signature valid</span
+                    >
+                    <div class="sig-details">
+                      Digitally Signed.<br />
+                      Name:
+                      <span class="editable" contenteditable="true"
+                        >KRITIKA SARMAH</span
+                      ><br />
+                      Date:
+                      <span class="editable" contenteditable="true"
+                        >12-Dec-2025 12:41:45</span
+                      ><br />
+                      Reason:
+                      <span class="editable" contenteditable="true"
+                        >eDistrict</span
+                      ><br />
+                      Location:
+                      <span class="editable" contenteditable="true">Assam</span>
+                    </div>
+                  </div>
+                  <img src="GreenTick.png" class="green-tick" alt="Valid" />
                 </div>
               </div>
-              <img src="GreenTick.png" class="green-tick" alt="Valid" />
             </div>
           </div>
-        </div>
-
-        <div class="notes-area">
-          <span
-            style="
-              font-weight: bold;
-              text-decoration: underline;
-              font-size: 11px;
-            "
-            >NOTE :</span
-          >
-          <ol
-            style="
-              font-size: 10.5px;
-              font-style: italic;
-              line-height: 1.4;
-              margin: 5px 0 0 15px;
-              padding: 0;
-            "
-          >
-            <li>
-              This certificate is digitally signed and therefore needs no
-              physical signature.
-            </li>
-            <li>
-              Authenticity can be verified from
-              http://www.assam.gov.in/certificate-verification.
-            </li>
-            <li>
-              This certificate is legally valid as per the Information
-              Technology Act 2000.
-            </li>
-            <li>Tampering of this certificate will attract penal action.</li>
-          </ol>
-        </div>
-
-        <div class="csc-footer">
-          <div>
-            CSC Name :
-            <span
-              class="editable"
-              id="cscName"
-              data-field="cscName"
-              contenteditable="true"
-              >Tinsukia,SRIPURIA TINGRAI</span
-            >
+          <div class="notes-area">
+            <b>NOTE :</b>
+            <ol style="margin: 2px 0 0 15px; padding: 0">
+              <li>
+                This certificate is digitally signed and therefore needs no
+                physical signature.
+              </li>
+              <li>
+                Authenticity can be verified from
+                http://www.assam.gov.in/certificate-verification.
+              </li>
+              <li>
+                This certificate is legally valid as per the Information
+                Technology Act 2000.
+              </li>
+              <li>Tampering of this certificate will attract penal action.</li>
+            </ol>
           </div>
-          <div>
-            CSC ID :
-            <span
-              class="editable"
-              id="cscId"
-              data-field="cscId"
-              contenteditable="true"
-              >AS247123630012</span
-            >
+
+          <div class="csc-footer">
+            <div>
+              CSC Name :
+              <span contenteditable="true" class="editable"
+                >________________</span
+              >
+            </div>
+            <div>CSC ID : 17006917</div>
           </div>
         </div>
       </div>
     </div>
+
+    <button class="fab" onclick="savePDF()">💾</button>
+
     <script>
-      function generateQR() {
-  const qrBox = document.getElementById("qr-box");
-  qrBox.innerHTML = "";
-
-  const publicVerifyUrl =
-    "https://kajalsharma987.github.io/IncomeCertification/verify.html";
-  const url = new URL(publicVerifyUrl);
-
-  url.searchParams.set("read", "1");
-  url.searchParams.set(
-    "certNo",
-    document.getElementById("certNo").innerText.trim(),
-  );
-
-  new QRCode(qrBox, {
-    text: url.toString(),
-    width: 95,
-    height: 95,
-  });
-
-  const cross = document.createElement("div");
-  cross.className = "qr-cross";
-  cross.setAttribute("aria-hidden", "true");
-  qrBox.appendChild(cross);
-}
-
-      
-
-      function syncFieldsFrom(el) {
-        const key = el.getAttribute("data-field");
-        if (key) {
-          const val = el.innerText;
-          document.querySelectorAll(`[data-field="${key}"]`).forEach((node) => {
-            if (node !== el) node.innerText = val;
-          });
-        }
-
-        if (el.id === "certNo") {
-          const digits = el.innerText.replace(/[^0-9]/g, "");
-          const barcodeEl = document.getElementById("certNoBarcode");
-          if (barcodeEl) barcodeEl.innerText = digits || el.innerText.trim();
-          renderBarcode(digits || el.innerText.trim());
+      function updateBarcode() {
+        const certNo = document.getElementById("certNo").innerText.trim();
+        const digits = certNo.replace(/[^0-9]/g, "");
+        const textEl = document.getElementById("barcodeText");
+        if (textEl) textEl.innerText = digits;
+        JsBarcode("#barcodeSvg", digits, {
+          format: "CODE128",
+          displayValue: false,
+          height: 40,
+          width: 1.5,
+        });
+        const svgEl = document.getElementById("barcodeSvg");
+        if (textEl && svgEl) {
+          const w = svgEl.getBoundingClientRect().width;
+          textEl.style.width = `${w}px`;
         }
       }
 
-      function renderBarcode(value) {
-        const svg = document.getElementById("barcodeSvg");
-        if (!svg || !value || typeof JsBarcode === "undefined") return;
-        JsBarcode(svg, value, {
-          format: "CODE128",
-          displayValue: false,
-          height: 30,
-          width: 1.0,
-          margin: 0,
+      function generateQR() {
+        const qrBox = document.getElementById("qr-box");
+        qrBox.innerHTML = "";
+        const publicVerifyUrl =
+          "https://kajalsharma987.github.io/IncomeCertification/verify.html";
+        const url = new URL(publicVerifyUrl);
+        url.searchParams.set("read", "1");
+        url.searchParams.set(
+          "certNo",
+          document.getElementById("certNo").innerText.trim(),
+        );
+        url.searchParams.set(
+          "appNo",
+          document.querySelector('[data-field="appNo"]')?.innerText?.trim() || "",
+        );
+        url.searchParams.set(
+          "date",
+          document.querySelector('[data-field="date"]')?.innerText?.trim() || "",
+        );
+        url.searchParams.set("name", getFieldValue("name"));
+        url.searchParams.set("father", getFieldValue("father"));
+        url.searchParams.set("village", getFieldValue("village"));
+        url.searchParams.set("mouza", getFieldValue("mouza"));
+        url.searchParams.set("circle", getFieldValue("circle"));
+        url.searchParams.set("district", getFieldValue("district"));
+        url.searchParams.set("caste", getFieldValue("caste"));
+        new QRCode(qrBox, {
+          text: url.toString(),
+          width: 95,
+          height: 95,
+        });
+        const cross = document.createElement("div");
+        cross.className = "qr-cross";
+        cross.setAttribute("aria-hidden", "true");
+        qrBox.appendChild(cross);
+      }
+
+      function getFieldValue(key) {
+        const el = document.querySelector(`[data-field="${key}"]`);
+        return el ? el.innerText.trim() : "";
+      }
+
+      function setFieldValue(key, value) {
+        document.querySelectorAll(`[data-field="${key}"]`).forEach((el) => {
+          el.innerText = value;
         });
       }
 
       document.addEventListener("input", (e) => {
         const el = e.target;
         if (el && el.classList && el.classList.contains("editable")) {
-          syncFieldsFrom(el);
+          const key = el.getAttribute("data-field");
+          if (key) {
+            const val = el.innerText;
+            document.querySelectorAll(`[data-field="${key}"]`).forEach((node) => {
+              if (node !== el) node.innerText = val;
+            });
+          }
+          if (el.id === "certNo") {
+            updateBarcode();
+            generateQR();
+          }
         }
       });
 
-      // Jab aap PDF button dabayengi, pehle QR update hoga phir download
-      async function savePDF() {
-        const data = {
-          certNo: document.getElementById("certNo").innerText.trim(),
-          appNo: document.getElementById("appNo").innerText.trim(),
-          date: document.getElementById("issueDate").innerText.trim(),
-          name: document.getElementById("personName").innerText.trim(),
-          father: document.getElementById("fatherName").innerText.trim(),
-          village: document.getElementById("village").innerText.trim(),
-          mouza: document.getElementById("mouza").innerText.trim(),
-          circle: document.getElementById("circle").innerText.trim(),
-          district: document.getElementById("district").innerText.trim(),
-          income: document.getElementById("incomeSource").innerText.trim(),
-          amount: document.getElementById("amount").innerText.trim(),
-          words: document.getElementById("amountWords").innerText.trim(),
-          cscName: document.getElementById("cscName").innerText.trim(),
-          cscId: document.getElementById("cscId").innerText.trim(),
+      document.getElementById("photoInput").onchange = function (e) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const img = document.getElementById("photoImg");
+          img.src = event.target.result;
+          img.style.display = "block";
+          document.getElementById("photoText").style.display = "none";
         };
+        reader.readAsDataURL(e.target.files[0]);
+      };
 
-        try {
-          const res = await fetch("api/save.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-          });
-          const out = await res.json();
-          if (out && out.appId) {
-            window.__appId = out.appId;
-          }
-        } catch (e) {
-          // ignore, QR will show appId=0 if save fails
-        }
-
-        generateQR();
-        setTimeout(async () => {
-          const element = document.getElementById("certificate");
-          const prevBodyPadding = document.body.style.padding;
-          const prevBodyMargin = document.body.style.margin;
-          const prevBodyDisplay = document.body.style.display;
-          const prevBodyAlign = document.body.style.alignItems;
-          const prevElemMargin = element.style.margin;
-          const prevElemWidth = element.style.width;
-          const prevElemHeight = element.style.height;
-          document.body.style.padding = "0";
-          document.body.style.margin = "0";
-          document.body.style.display = "block";
-          document.body.style.alignItems = "flex-start";
-          element.style.margin = "0";
-          element.style.width = "210mm";
-          element.style.height = "297mm";
-          try {
-            const canvas = await html2canvas(element, {
-              scale: 2,
-              useCORS: true,
-              allowTaint: true,
-              backgroundColor: "#ffffff",
-              scrollX: 0,
-              scrollY: 0,
-              windowWidth: element.offsetWidth,
-              windowHeight: element.offsetHeight,
-            });
-            const imgData = canvas.toDataURL("image/jpeg", 0.98);
-            const { jsPDF } = window.jspdf || {};
-            const pdf = new jsPDF("p", "mm", "a4");
-            pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-            pdf.save(
-              "Certificate_" +
-                document.getElementById("personName").innerText +
-                ".pdf",
-            );
-          } finally {
-            element.style.margin = prevElemMargin;
-            element.style.width = prevElemWidth;
-            element.style.height = prevElemHeight;
-            document.body.style.padding = prevBodyPadding;
-            document.body.style.margin = prevBodyMargin;
-            document.body.style.display = prevBodyDisplay;
-            document.body.style.alignItems = prevBodyAlign;
-          }
-        }, 500);
+      async function savePDF() {
+        const { jsPDF } = window.jspdf;
+        const element = document.getElementById("certificate");
+        const canvas = await html2canvas(element, { scale: 3, useCORS: true });
+        const imgData = canvas.toDataURL("image/jpeg", 1.0);
+        const pdf = new jsPDF("p", "mm", "a4");
+        pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+        pdf.save("Caste_Certificate.pdf");
       }
 
-      // Pehli baar page load hote hi QR bana de
       window.onload = () => {
+        updateBarcode();
         generateQR();
-        const certEl = document.getElementById("certNo");
-        if (certEl) syncFieldsFrom(certEl);
+        const params = new URLSearchParams(window.location.search);
+        if (params.has("name")) setFieldValue("name", params.get("name"));
+        if (params.has("father")) setFieldValue("father", params.get("father"));
+        if (params.has("village"))
+          setFieldValue("village", params.get("village"));
+        if (params.has("mouza")) setFieldValue("mouza", params.get("mouza"));
+        if (params.has("circle")) setFieldValue("circle", params.get("circle"));
+        if (params.has("district"))
+          setFieldValue("district", params.get("district"));
+        if (params.has("caste")) setFieldValue("caste", params.get("caste"));
+        if (params.has("certNo")) {
+          document.getElementById("certNo").innerText = params.get("certNo");
+          updateBarcode();
+        }
+        if (params.get("read") === "1") {
+          document.body.classList.add("read-only");
+          document.querySelectorAll(".editable").forEach((el) => {
+            el.setAttribute("contenteditable", "false");
+          });
+        }
       };
     </script>
   </body>
 </html>
+
 
