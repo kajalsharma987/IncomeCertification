@@ -722,7 +722,31 @@
 
       function decodeData(payload) {
         try {
-          return JSON.parse(decodeURIComponent(escape(atob(payload))));
+          const parsed = JSON.parse(decodeURIComponent(escape(atob(payload))));
+          if (Array.isArray(parsed)) {
+            const keys = [
+              "certNo",
+              "appNo",
+              "date",
+              "name",
+              "father",
+              "village",
+              "mouza",
+              "circle",
+              "district",
+              "income",
+              "amount",
+              "words",
+              "cscName",
+              "cscId",
+            ];
+            const obj = {};
+            keys.forEach((k, i) => {
+              if (parsed[i]) obj[k] = parsed[i];
+            });
+            return obj;
+          }
+          return parsed;
         } catch (e) {
           return null;
         }
@@ -761,4 +785,3 @@
     </script>
   </body>
 </html>
-
