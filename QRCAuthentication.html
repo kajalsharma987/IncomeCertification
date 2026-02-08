@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>QR Authentication</title>
+    <meta http-equiv="refresh" content="0; url=verify.php" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    Redirecting to verification...
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const data = params.get("data");
+      const appId = params.get("appId");
+      const target = new URL("verify.php", window.location.href);
+      if (appId) target.searchParams.set("appId", appId);
+      if (data) target.searchParams.set("data", data);
+      window.location.replace(target.toString());
+    </script>
+  </body>
+</html>
