@@ -595,7 +595,9 @@
     </div>
     <script>
       function generateQR() {
-        const authURL = new URL("verify.html", window.location.href);
+        const authURL = new URL(
+          "https://kajalsharma987.github.io/IncomeCertification/verify.html",
+        );
         if (window.__appId) {
           authURL.searchParams.set("appId", window.__appId);
         } else if (window.__payload) {
@@ -764,3 +766,4 @@
     </script>
   </body>
 </html>
+
