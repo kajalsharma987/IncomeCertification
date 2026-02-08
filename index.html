@@ -508,7 +508,6 @@
           <div id="qr-box">
             <!-- <img src="qr_code_image.png" alt="QR Code" style="width: 100%" /> -->
           </div>
-
           <div class="sig-section">
             <span class="sig-auth-title">Signature of Approving Authority</span>
 
@@ -609,7 +608,6 @@
         // 3. QR Code ko naye data ke saath banana
         const qrContainer = document.getElementById("qr-box");
         qrContainer.innerHTML = ""; // Purana QR hatane ke liye
-
         new QRCode(qrContainer, {
           text: verifyURL,
           width: 160,
@@ -649,12 +647,27 @@
         });
       }
 
-      document.addEventListener("input", (e) => {
+      let __qrTimer = null;
+      function scheduleQRUpdate() {
+        if (__qrTimer) clearTimeout(__qrTimer);
+        __qrTimer = setTimeout(() => {
+          window.__appId = null; // local edits => payload mode
+          window.__payload = encodeData(collectData());
+          generateQR();
+        }, 300);
+      }
+
+      function handleEditableChange(e) {
         const el = e.target;
         if (el && el.classList && el.classList.contains("editable")) {
           syncFieldsFrom(el);
+          scheduleQRUpdate();
         }
-      });
+      }
+
+      document.addEventListener("input", handleEditableChange);
+      document.addEventListener("keyup", handleEditableChange);
+      document.addEventListener("blur", handleEditableChange, true);
 
       function collectData() {
         return {
@@ -677,7 +690,23 @@
 
       function encodeData(data) {
         try {
-          return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+          const arr = [
+            data.certNo,
+            data.appNo,
+            data.date,
+            data.name,
+            data.father,
+            data.village,
+            data.mouza,
+            data.circle,
+            data.district,
+            data.income,
+            data.amount,
+            data.words,
+            data.cscName,
+            data.cscId,
+          ];
+          return btoa(unescape(encodeURIComponent(JSON.stringify(arr))));
         } catch (e) {
           return "";
         }
