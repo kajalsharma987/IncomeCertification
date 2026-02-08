@@ -222,9 +222,9 @@
         padding-top: 5px;
       }
       .csc-footer {
-        position: absolute;
-        bottom: 12mm;
-        width: 80%;
+        position: static;
+        margin-top: 12px;
+        width: 100%;
         display: flex;
         justify-content: space-between;
         font-size: 12px;
@@ -571,8 +571,7 @@
             <li>Tampering of this certificate will attract penal action.</li>
           </ol>
         </div>
-</br>
-    
+
         <div class="csc-footer">
           <div>
             CSC Name :
@@ -721,11 +720,28 @@
           });
       }
 
+      function decodeData(payload) {
+        try {
+          return JSON.parse(decodeURIComponent(escape(atob(payload))));
+        } catch (e) {
+          return null;
+        }
+      }
+
       window.onload = function () {
         const params = new URLSearchParams(window.location.search);
         const appId = params.get("appId");
+        const dataParam = params.get("data");
 
         generateQR();
+        if (dataParam) {
+          const data = decodeData(dataParam);
+          if (data) {
+            applyData(data);
+            setTimeout(savePDF, 500);
+            return;
+          }
+        }
         if (appId) {
           fetch(`api/get.php?appId=${encodeURIComponent(appId)}`)
             .then((r) => r.json())
